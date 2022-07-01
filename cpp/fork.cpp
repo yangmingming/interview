@@ -7,10 +7,13 @@
  * 总结
  * 1. fork生成子进程之后，复制了父进程的数据空间/堆/栈
  * 2. fork子进程如果不修改虚拟地址的内容，子进程和父进程指向相同的物理地址;子进程修改内容之后，通过写时复制技术,会重新复制物理地址的内容,两个虚拟地址开始指向不同的物理地址;但是虚拟地址还是一致的.
+ * 参考:https://blog.csdn.net/xy010902100449/article/details/44851453
  */
 int main()
 {
     char str[6]="hello";
+    char *ptr = (char *)malloc(10);
+    strcpy(ptr, "yang");
 
     pid_t pid=fork();
 
@@ -22,12 +25,24 @@ int main()
         str[0]='b';
         printf("子进程中str=%s\n",str);
         printf("子进程中str指向的首地址:%x\n",(void *)str);
+
+        ptr[0]='z';
+        printf("子进程中ptr=%s\n",ptr);
+        if(ptr != nullptr){
+            free(ptr);
+            ptr = nullptr;
+        }
     }
     else
     {
         sleep(1);
         printf("父进程中str=%s\n",str);
         printf("父进程中str指向的首地址:%x\n",(void *)str);
+        printf("父进程中ptr=%s\n",ptr);
+        if(ptr != nullptr){
+            free(ptr);
+            ptr = nullptr;
+        }
     }
 
     return 0;
