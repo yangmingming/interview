@@ -78,13 +78,13 @@ void PreOrder2(TreeNode *root){
         while(root != nullptr){
             std::cout << root->val << ","; 	// 根
             s.push(root);
-            root = root->left;			// 根
+            root = root->left;			    // 左
         }
 
         if(!s.empty()){
             TreeNode *node = s.top();s.pop();
 
-            root = node ->right;		// 右
+            root = node ->right;		    // 右
         }
     }
 }
@@ -97,14 +97,14 @@ void InOrder2(TreeNode *root){
         // 添加左节点
         while(root != nullptr){
             s.push(root);
-            root = root->left;			// 左
+            root = root->left;			    // 左
         }
 
         if(!s.empty()){
             TreeNode *node = s.top();s.pop();
             std::cout << node->val << ",";	// 根
 
-            root = node ->right;		// 右
+            root = node ->right;		    // 右
         }
     }
 }
@@ -123,22 +123,15 @@ void PostOrder2(TreeNode *head){
             auto node = s.top(); s.pop();
 
             if(pre != node->right && node->right != nullptr){
-		s.push(node);			// 重新入栈
+                s.push(node);			// 重新入栈
                 head = node->right;		// 右
             }else{
                 std::cout << node->val << ",";	// 根
-		pre = node;
-		head = nullptr;			// 从栈中获取下一个节点
+                pre = node;
+                head = nullptr;			// 从栈中获取下一个节点
             }
         }
     }
-
-    if(head == nullptr){
-        return;
-    }
-    PostOrder(head->left);
-    PostOrder(head->right);
-    std::cout << head->val << ",";
 }
 
 void LevelOrder(TreeNode *head){
