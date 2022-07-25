@@ -20,6 +20,16 @@ void manual_cmp(){
     q.push(Stu{3, "look"});
     q.push(Stu{2, "seem"});
 
+    /*
+    // 注:如果使用引用的话，一旦pop,内存访问可能出现异常
+    for(int i = 0; i < 3; i++){
+        const Stu &item = q.top();q.pop();
+        std::cout << (void *)&item << std::endl;
+
+        std::cout << "val = " << item.id << std::endl;
+    }
+    */
+
     while(!q.empty()){
         // 注意返回值也是const类型
         const Stu &item = q.top();
